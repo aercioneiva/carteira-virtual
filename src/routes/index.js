@@ -1,13 +1,14 @@
 const express = require('express')
 const routes = express.Router()
-const { index,store } = require('../controllers/CategoriaController')
+const CategoriaController = require('../controllers/CategoriaController')
+const MovimentacaoController = require('../controllers/MovimentacaoController')
+const HomeController = require('../controllers/HomeController')
+routes.get('/',HomeController.index);
 
-routes.get('/',(req,res)=>{
-    res.render('pages/home')
-});
+routes.get('/categorias',CategoriaController.index)
+routes.post('/categorias',CategoriaController.store)
 
-routes.get('/categorias',index)
-routes.post('/categorias',store)
-
+routes.get('/movimentacao',MovimentacaoController.index)
+routes.post('/movimentacao',MovimentacaoController.store)
 
 module.exports = routes

@@ -9,7 +9,13 @@ const Movimentacao = new mongoose.Schema(
         observacao:{
             type: String
         },
-        categoria:{ type: mongoose.Schema.Types.Objectid, ref: 'Categoria'}
+        tipo:{
+            type: String,
+            required: true
+        },
+        categoria:{ 
+            type: String
+        }
     },
     {
         timestamps: true
