@@ -3,8 +3,6 @@ const Categoria = require('../models/Categoria')
 HomeController = {}
 
 HomeController.index = async (req, res) => {
-    let dadosEntrada = []
-    let dadosSaida = []
     const mov = await Movimentacao.find()
     const cat = await Categoria.find()
 
@@ -13,12 +11,12 @@ HomeController.index = async (req, res) => {
     cat.forEach(c => {
         dados.push({
             name: c.name,
-            id: c._id,
+            id: c._id.toString(),
             entrada: 0,
             saida: 0
         })
     });
-
+    
     dados.forEach((c,ind) => {
         const valorE = mov.filter(m => m.categoria == c.id && m.tipo == 'E').reduce((ac, ob) => ac + ob.valor,0)
         const valorS = mov.filter(m => m.categoria == c.id && m.tipo == 'S').reduce((ac, ob) => ac + ob.valor,0)

@@ -5,7 +5,17 @@ MovimentacaoController = {}
 MovimentacaoController.index = async (req, res) => {
     const mov = await Movimentacao.find()
     const cat = await Categoria.find()
-    res.render('pages/movimentacao',{mov,cat})
+
+    let saldo = 0
+    mov.forEach(m => {
+        if(m.tipo == 'E'){
+            saldo += m.valor
+        }else{
+            saldo += m.valor *(-1)
+        }
+    });
+
+    res.render('pages/movimentacao',{mov,cat,saldo})
 }
 
 MovimentacaoController.store = async (req, res) => {
@@ -15,11 +25,20 @@ MovimentacaoController.store = async (req, res) => {
     mov.categoria = req.body.categoria
     mov.observacao = req.body.observacao
 
-    console.log(mov)
     await Movimentacao.create(mov);
     const cat = await Categoria.find()
-    mov = Movimentacao.find()
-    res.render('pages/movimentacao',{mov,cat})
+    mov = await Movimentacao.find()
+
+    let saldo = 0
+    mov.forEach(m => {
+        if(m.tipo == 'E'){
+            saldo += m.valor
+        }else{
+            saldo += m.valor *(-1)
+        }
+    });
+
+    res.render('pages/movimentacao',{mov,cat,saldo})
 }
 
 module.exports = MovimentacaoController
